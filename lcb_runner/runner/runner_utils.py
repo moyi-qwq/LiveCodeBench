@@ -34,10 +34,10 @@ def build_runner(args, model: LanguageModel):
         from lcb_runner.runner.deepseek_runner import DeepSeekRunner
 
         return DeepSeekRunner(args, model)
-    if model.model_style == LMStyle.DeepSeekAPI:
-        from lcb_runner.runner.deepseek_runner import DeepSeekRunner
+    if model.model_style == LMStyle.OnlineAPI:
+        from lcb_runner.runner.online_runner import OnlineRunner
 
-        return DeepSeekRunner(args, model)
+        return OnlineRunner(args, model)
     if model.model_style == LMStyle.Grok:
         from lcb_runner.runner.grok_runner import GrokRunner
 

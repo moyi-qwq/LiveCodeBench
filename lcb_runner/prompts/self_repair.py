@@ -193,6 +193,21 @@ def format_prompt_self_repair(
             },
         ]
         return chat_messages
+    if LanguageModelStyle == LMStyle.OnlineAPI:
+        chat_messages = [
+            {"role": "system", "content": PromptConstants.SYSTEM_MESSAGE_GENERIC},
+        ]
+        chat_messages += [
+            {
+                "role": "user",
+                "content": get_generic_question_template_answer(
+                    question, code, result, metadata
+                )
+                + "\n\n"
+                + PromptConstants.FORMATTING_REPEAT,
+            },
+        ]
+        return chat_messages
     if LanguageModelStyle == LMStyle.LLaMa3:
         chat_messages = [
             {"role": "system", "content": PromptConstants.SYSTEM_MESSAGE_GENERIC},

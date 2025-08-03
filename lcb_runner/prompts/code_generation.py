@@ -32,6 +32,8 @@ class PromptConstants:
         "The reasoning process and answer are enclosed within <think> </think> and <answer> </answer> tags, respectively, i.e., <think> reasoning process here </think> <answer> answer here </answer>.<｜User｜>"
     )
 
+    SYSTEM_MESSAGE_ONLINE = f"You are an expert Python programmer. You will be given a question (problem specification) and will generate a correct Python program that matches the specification and passes all tests."
+
     FORMATTING_MESSAGE_WITH_STARTER_CODE = "You will use the following starter code to write the solution to the problem and enclose your code within delimiters."
 
     FORMATTING_WITHOUT_STARTER_CODE = "Read the inputs from stdin solve the problem and write the answer to stdout (do not directly test on the sample inputs). Enclose your code within delimiters as follows. Ensure that when the python program runs, it reads the inputs, runs the algorithm and writes output to STDOUT."
@@ -163,6 +165,19 @@ def get_deepseek_r1_question_template_answer(question: CodeGenerationProblem):
         prompt += f"{PromptConstants.FORMATTING_WITHOUT_STARTER_CODE}\n"
         prompt += f"```python\n# YOUR CODE HERE\n```\n\n"
     prompt += f"<｜Assistant｜>"
+    return prompt
+
+
+def get_online_question_template_answer(question: CodeGenerationProblem):
+    prompt = "You will be given a question (problem specification) and will generate a correct Python program that matches the specification and passes all tests.\n\n"
+    prompt += f"Question: {question.question_content}\n\n"
+    if question.starter_code:
+        prompt += f"{PromptConstants.FORMATTING_MESSAGE_WITH_STARTER_CODE}\n"
+        prompt += f"```python\n{question.starter_code}\n```\n\n"
+    else:
+        prompt += f"{PromptConstants.FORMATTING_WITHOUT_STARTER_CODE}\n"
+        prompt += f"```python\n# YOUR CODE HERE\n```\n\n"
+    prompt += f"### Answer: (use the provided format with backticks)\n\n"
     return prompt
 
 
@@ -333,6 +348,11 @@ def format_prompt_generation(
     if LanguageModelStyle == LMStyle.DeepSeekR1:
         prompt = f"{PromptConstants.SYSTEM_MESSAGE_DEEPSEEK_R1}"
         prompt += f"{get_deepseek_r1_question_template_answer(question)}"
+        return prompt
+
+    if LanguageModelStyle == LMStyle.OnlineAPI:
+        prompt = f"{PromptConstants.SYSTEM_MESSAGE_ONLINE}\n\n"
+        prompt += f"{get_online_question_template_answer(question)}"
         return prompt
 
     if LanguageModelStyle == LMStyle.GenericBase:

@@ -95,6 +95,17 @@ def format_prompt_execution_base(
             {"role": "user", "content": prompt},
         ]
         return chat_messages
+    if LanguageModelStyle == LMStyle.OnlineAPI:
+        chat_messages = [
+            {
+                "role": "system",
+                "content": system_message,
+            },
+        ]
+        chat_messages += [
+            {"role": "user", "content": prompt},
+        ]
+        return chat_messages
     if LanguageModelStyle == LMStyle.LLaMa3:
         chat_messages = [
             {

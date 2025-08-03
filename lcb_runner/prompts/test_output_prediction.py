@@ -176,6 +176,22 @@ def format_prompt_test_output(
             },
         ]
         return chat_messages
+    if LanguageModelStyle == LMStyle.OnlineAPI:
+        chat_messages = [
+            {
+                "role": "system",
+                "content": PromptConstants.SYSTEM_MESSAGE_CHAT_GENERIC,
+            },
+        ]
+        chat_messages += [
+            {
+                "role": "user",
+                "content": get_generic_question_template_test_completion(
+                    question, testcase_input
+                ),
+            },
+        ]
+        return chat_messages
     if LanguageModelStyle == LMStyle.LLaMa3:
         chat_messages = [
             {

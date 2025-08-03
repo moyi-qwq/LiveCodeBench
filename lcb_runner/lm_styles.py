@@ -21,6 +21,7 @@ class LMStyle(Enum):
 
     DataBricks = "DataBricks"
     DeepSeekAPI = "DeepSeekAPI"
+    OnlineAPI = "OnlineAPI"
 
     GenericBase = "GenericBase"
 
@@ -686,7 +687,7 @@ LanguageModelList: list[LanguageModel] = [
         link="https://huggingface.co/Qwen/Qwen2.5-Coder-32B-Instruct",
     ),
     LanguageModel(
-        "Qwen/Qwen3-235B-A22B",
+        "Qwen/Qwen3-235B-A22B",™
         "Qwen3-235B-A22B",
         LMStyle.CodeQwenInstruct,
         datetime(2024, 6, 30),
@@ -825,6 +826,13 @@ LanguageModelList: list[LanguageModel] = [
         LMStyle.DeepSeekR1,
         datetime(2025, 3, 12),
         "https://www.wenxiaobai.com/",
+    ),
+    LanguageModel(
+        "online-model-example",
+        "Online-Model-Example",
+        LMStyle.OnlineAPI,
+        datetime(2024, 1, 1),
+        "https://dashscope.aliyuncs.com/",
     ),
     LanguageModel(
         "grok-3-mini-beta",
